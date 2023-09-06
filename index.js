@@ -1,35 +1,50 @@
-import Tree from "./Tree.js";
+import binaryTree from "./binaryTree.js";
 import { prettyPrint } from "./prettyPrint.js";
 
-// Create a binary search tree from the given array
-let tree = Tree.create([1, 2, 5, 6, 7, 7, 6, 6, 4, 5, 9, 565, 3, 8, 4]);
+function ran(amount) {
+  let array = [];
+  while (amount) {
+    array.push(Math.floor(Math.random() * 10000 + 0));
+    amount--;
+  }
+  return array;
+}
 
-// Print the binary search tree
+let tree = binaryTree.create(ran(100));
 prettyPrint(tree.root);
 
-tree.insert(10);
+console.log(
+  "binaryTree.isBalanced(tree.root): " + binaryTree.isBalanced(tree.root)
+);
 
-console.log("tree.insert(10):\n");
+console.log("\x1b[90mtree.levelOrder()\n\x1b[0m" + tree.levelOrder());
+console.log("\x1b[90mtree.preOrder()\n\x1b[0m" + tree.preOrder());
+console.log("\x1b[90mtree.inOrder()\n\x1b[0m" + tree.inOrder());
+console.log("\x1b[90mtree.postOrder()\n\x1b[0m" + tree.postOrder());
+
+ran(10000).forEach((number) => {
+  tree.insert(number);
+});
+
+console.log("\x1b[91mUnbalancing tree\x1b[0m");
 prettyPrint(tree.root);
+console.log(
+  "binaryTree.isBalanced(tree.root): " + binaryTree.isBalanced(tree.root)
+);
 
-tree.deleteNode(1);
+console.log("\x1b[90mtree.levelOrder()\n\x1b[0m" + tree.levelOrder());
+console.log("\x1b[90mtree.preOrder()\n\x1b[0m" + tree.preOrder());
+console.log("\x1b[90mtree.inOrder()\n\x1b[0m" + tree.inOrder());
+console.log("\x1b[90mtree.postOrder()\n\x1b[0m" + tree.postOrder());
 
-console.log("tree.deleteNode(1):\n");
+console.log("\x1b[92mRe-balancing tree\x1b[0m");
+tree.rebalance();
 prettyPrint(tree.root);
+console.log(
+  "binaryTree.isBalanced(tree.root): " + binaryTree.isBalanced(tree.root)
+);
 
-tree.deleteNode(3);
-
-console.log("tree.deleteNode(3):\n");
-prettyPrint(tree.root);
-
-tree.deleteNode(5);
-
-console.log("delete root: " + "tree.deleteNode(5):\n");
-prettyPrint(tree.root);
-console.log("tree.levelOrder():\n" + tree.levelOrder());
-
-console.log("tree.preOrder():\n" + tree.preOrder());
-console.log("tree.inOrder():\n" + tree.inOrder());
-console.log("tree.postOrder():\n" + tree.postOrder());
-
-console.log("tree.height(tree.find(6)):" + tree.height(tree.find(6).node));
+console.log("\x1b[90mtree.levelOrder()\n\x1b[0m" + tree.levelOrder());
+console.log("\x1b[90mtree.preOrder()\n\x1b[0m" + tree.preOrder());
+console.log("\x1b[90mtree.inOrder()\n\x1b[0m" + tree.inOrder());
+console.log("\x1b[90mtree.postOrder()\n\x1b[0m" + tree.postOrder());
