@@ -126,12 +126,64 @@ function create(array) {
 
     return { node, parentNode };
   }
+  function levelOrder(func = (data) => data) {
+    let array = [];
+    let queue = [];
+    if (!root) return;
+    queue.push(root);
+    //while at least one discovered node
+    while (queue[0]) {
+      let current = queue[0];
+      array.push(func(current.data));
+      if (current.left !== null) queue.push(current.left);
+      if (current.right !== null) queue.push(current.right);
+      queue.shift();
+    }
+    return array;
+  }
+  function preOrder(func = (data) => data) {
+    let array = [];
+    let recursion = (node) => {
+      if (node == null) return;
+      array.push(func(node.data));
+      recursion(node.left);
+      recursion(node.right);
+    };
+    recursion(root);
+    return array;
+  }
+  function inOrder(func = (data) => data) {
+    let array = [];
+    let recursion = (node) => {
+      if (node == null) return;
+      recursion(node.left);
+      array.push(func(node.data));
+      recursion(node.right);
+    };
+    recursion(root);
+    return array;
+  }
+  function postOrder(func = (data) => data) {
+    let array = [];
+    let recursion = (node) => {
+      if (node == null) return;
+      recursion(node.left);
+      recursion(node.right);
+      array.push(func(node.data));
+    };
+    recursion(root);
+    return array;
+  }
   return {
     get root() {
       return root;
     },
     insert,
     deleteNode,
+    levelOrder,
+    preOrder,
+    inOrder,
+    postOrder,
   };
 }
 export default { create };
