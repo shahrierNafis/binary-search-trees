@@ -84,14 +84,14 @@ function create(array) {
     }
     // if the node has two children
     else {
-      // find the inorder successor
+      // find the successor
       let successor = node.right;
       while (successor.left) {
         successor = successor.left;
       }
-      // delete the inorder successor
+      // delete the successor
       deleteNode(successor.data);
-      // replace the node's data with the inorder successor's data
+      // replace the node's data with the successor's data
       node.data = successor.data;
     }
   }
@@ -141,38 +141,123 @@ function create(array) {
     }
     return array;
   }
+  /**
+   * Returns an array with the data of all nodes in the tree using pre-order traversal.
+   * @param {function} [func=(data) => data] - Optional function to apply to each node's data.
+   * @returns {Array} - Array containing the data of all nodes in the tree.
+   */
   function preOrder(func = (data) => data) {
     let array = [];
+
+    /**
+     * Helper function that performs pre-order traversal of the tree.
+     * @param {TreeNode} node - The current node being visited.
+     */
     let recursion = (node) => {
       if (node == null) return;
       array.push(func(node.data));
       recursion(node.left);
       recursion(node.right);
     };
+
     recursion(root);
     return array;
   }
+  /**
+   * Returns an array of node data in in-order traversal order.
+   * @param {function} func - Optional function to transform node data.
+   * @returns {Array} - Array of node data.
+   */
   function inOrder(func = (data) => data) {
+    // Initialize an empty array to store node data
     let array = [];
+
+    // Recursive function to traverse the tree in in-order order
     let recursion = (node) => {
+      // Base case: if the node is null, return
       if (node == null) return;
+
+      // Traverse left subtree
       recursion(node.left);
+
+      // Add transformed node data to the array
       array.push(func(node.data));
+
+      // Traverse right subtree
       recursion(node.right);
     };
+
+    // Start the recursive traversal from the root node
     recursion(root);
+
+    // Return the array of node data
     return array;
   }
+  /**
+   * Returns an array containing the post-order traversal of a binary tree.
+   *
+   * @param {function} func - A function to be applied to each node's data. Default is an identity function.
+   * @returns {array} - An array containing the post-order traversal of the binary tree.
+   */
   function postOrder(func = (data) => data) {
+    // Initialize an empty array to store the post-order traversal
     let array = [];
+
+    // Recursive function to traverse the binary tree in post-order
     let recursion = (node) => {
+      // Base case: If the node is null, return
       if (node == null) return;
+
+      // Recursively traverse the left subtree
       recursion(node.left);
+
+      // Recursively traverse the right subtree
       recursion(node.right);
+
+      // Apply the provided function to the node's data and push it to the array
       array.push(func(node.data));
     };
+
+    // Start the recursion from the root node
     recursion(root);
+
+    // Return the array containing the post-order traversal
     return array;
+  }
+  /**
+   * Calculates the height of a binary tree.
+   * @param {Object} node - The root node of the binary tree.
+   * @param {number} h - The current height of the node (optional, default is 1).
+   * @returns {number} - The height of the binary tree.
+   */
+  function height(node, h = 1) {
+    let leftHeight;
+    let rightHeight;
+
+    // If the node doesn't exist, height is 0
+    if (!node) {
+      return 0;
+    }
+
+    // If the node is a leaf, height is 1
+    if (!(node.left || node.right)) {
+      return 1;
+    }
+
+    // Get the height of the left child
+    if (node.left) {
+      leftHeight = h + height(node.left);
+    }
+
+    // Get the height of the right child
+    if (node.right) {
+      rightHeight = h + height(node.right);
+    }
+
+    // The longest path counts as the height
+    h = leftHeight > rightHeight ? leftHeight : rightHeight;
+
+    return h;
   }
   return {
     get root() {
@@ -180,10 +265,12 @@ function create(array) {
     },
     insert,
     deleteNode,
+    find,
     levelOrder,
     preOrder,
     inOrder,
     postOrder,
+    height,
   };
 }
 export default { create };

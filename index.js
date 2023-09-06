@@ -31,3 +31,5 @@ console.log("tree.levelOrder():\n" + tree.levelOrder());
 console.log("tree.preOrder():\n" + tree.preOrder());
 console.log("tree.inOrder():\n" + tree.inOrder());
 console.log("tree.postOrder():\n" + tree.postOrder());
+
+console.log("tree.height(tree.find(6)):" + tree.height(tree.find(6).node));
